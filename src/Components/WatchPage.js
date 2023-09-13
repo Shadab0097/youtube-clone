@@ -14,17 +14,14 @@ const WatchPage = () => {
     const [searchParams] = useSearchParams()
     console.log(searchParams.get("v"))
     const dispatch = useDispatch()
+    const videoId = searchParams.get("v")
     useEffect(() => {
         dispatch(closeMenu())
-
         getInfo()
-
-
-
-    }, [searchParams.get("v")])
+    }, [videoId])
 
     const getInfo = async () => {
-        const data = await fetch(YOUTUBE_VIDEO_INFO_API + searchParams.get("v"))
+        const data = await fetch(YOUTUBE_VIDEO_INFO_API + videoId)
         const json = await data.json()
         setWatchPageInfo(json?.items[0])
         console.log(json?.items[0])
@@ -37,7 +34,7 @@ const WatchPage = () => {
                         <div className='pl-5 mt-20 w-full'>
                             <iframe width="800"
                                 height="460"
-                                src={"https://www.youtube.com/embed/" + searchParams.get("v")}
+                                src={"https://www.youtube.com/embed/" + videoId}
                                 title="YouTube video player"
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
